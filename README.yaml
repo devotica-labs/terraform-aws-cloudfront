@@ -1,0 +1,57 @@
+#
+# Canonical configuration for README.md (cloudposse-style doc standard,
+# native to Devotica). Run `make readme` to regenerate the terraform-docs
+# section of README.md.
+#
+
+name: terraform-aws-cloudfront
+license: APACHE2
+github_repo: devotica-labs/terraform-aws-cloudfront
+
+badges:
+  - name: CI
+    image: https://github.com/devotica-labs/terraform-aws-cloudfront/actions/workflows/ci.yml/badge.svg
+    url: https://github.com/devotica-labs/terraform-aws-cloudfront/actions/workflows/ci.yml
+  - name: Release
+    image: https://github.com/devotica-labs/terraform-aws-cloudfront/actions/workflows/release.yml/badge.svg
+    url: https://github.com/devotica-labs/terraform-aws-cloudfront/actions/workflows/release.yml
+  - name: License
+    image: https://img.shields.io/badge/License-Apache_2.0-blue.svg
+    url: LICENSE
+
+related:
+  - name: terraform-aws-alb
+    description: Public ALB used as the custom origin this distribution fronts.
+    url: https://github.com/devotica-labs/terraform-aws-alb
+  - name: terraform-aws-wafv2
+    description: Edge Web ACL (CLOUDFRONT scope) whose ARN is passed as web_acl_id.
+    url: https://github.com/devotica-labs/terraform-aws-wafv2
+  - name: terraform-aws-acm
+    description: Issues the us-east-1 certificate required when serving aliases.
+    url: https://github.com/devotica-labs/terraform-aws-acm
+  - name: terraform-aws-route53
+    description: Creates the alias record pointing at domain_name / hosted_zone_id.
+    url: https://github.com/devotica-labs/terraform-aws-route53
+
+description: |-
+  Terraform module for a single **Amazon CloudFront** distribution fronting one
+  origin — a custom origin (ALB / API domain) or a private S3 bucket via an
+  Origin Access Control. Fintech-hardened: redirect-to-https viewers, a
+  TLSv1.2_2021 floor, WAFv2 Web ACL passthrough, optional access logging, and
+  PriceClass_100 by default.
+
+introduction: |-
+  This module creates one [AWS CloudFront distribution](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-web.html)
+  with a single origin and a single default cache behavior. For a private S3
+  origin it also creates an [Origin Access Control](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html)
+  (sigv4) so the bucket can stay fully private. Rather than a
+  pass-arbitrary-config engine, it exposes focused inputs for the settings that
+  matter at the edge: origin type and connection, viewer TLS and certificate,
+  the default cache behavior, geo restriction, WAF association, and logging.
+
+usage: |-
+  See [`examples/complete`](examples/complete) for the full surface (private S3
+  origin + OAC + aliases + ACM + WAF + logging) and [`examples/basic`](examples/basic)
+  for a redirect-to-https distribution over a custom (ALB) origin.
+
+contributors: []
